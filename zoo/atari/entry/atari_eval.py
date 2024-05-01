@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # model_path is the path to the trained MuZero model checkpoint.
     # If no path is provided, the script will use the default model.
-    model_path = None
+    model_path = '/home/deep-learning/DAEVZero/zoo/atari/config/daev_data_mz_ctree/Qbert_muzero_ns50_upc1000_rr0.0_ddp_2gpu_seed0/ckpt/ckpt_best.pth.tar'
 
     # seeds is a list of seed values for the random number generator, used to initialize the environment.
     seeds = [0]
@@ -32,6 +32,7 @@ if __name__ == "__main__":
 
     # Setting the type of the environment manager to 'base' for the visualization purposes.
     create_config.env_manager.type = 'base'
+    
     # The number of environments to evaluate concurrently. Set to 1 for visualization purposes.
     main_config.env.evaluator_env_num = 1
     # The total number of evaluation episodes that should be run.
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     # The path where the recorded video will be saved.
     main_config.env.replay_path = './video'
     # The maximum number of steps for each episode during evaluation. This may need to be adjusted based on the specific characteristics of the environment.
-    main_config.env.eval_max_episode_steps = int(20)
+    main_config.env.eval_max_episode_steps = int(1e6)
 
     # These lists will store the mean and total rewards for each seed.
     returns_mean_seeds = []
@@ -57,7 +58,7 @@ if __name__ == "__main__":
             seed=seed,
             num_episodes_each_seed=num_episodes_each_seed,
             print_seed_details=False,
-            model_path=model_path
+            model_path=model_path,
         )
         print(returns_mean, returns)
         returns_mean_seeds.append(returns_mean)

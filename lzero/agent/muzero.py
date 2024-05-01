@@ -71,6 +71,7 @@ class MuZeroAgent:
 
         if cfg is not None and not isinstance(cfg, EasyDict):
             cfg = EasyDict(cfg)
+            print(cfg)
 
         if env_id is not None:
             assert env_id in MuZeroAgent.supported_env_list, "Please use supported envs: {}".format(

@@ -329,7 +329,7 @@ class GumbelMuZeroPolicy(MuZeroPolicy):
         network_output = self._learn_model.initial_inference(obs_batch)
 
         # value_prefix shape: (batch_size, 10), the ``value_prefix`` at the first step is zero padding.
-        latent_state, reward, value, policy_logits = mz_network_output_unpack(network_output)
+        latent_state, reward, value, policy_logits, reconstruction = mz_network_output_unpack(network_output)
 
         # transform the scaled value or its categorical representation to its original value,
         # i.e. h^(-1)(.) function in paper https://arxiv.org/pdf/1805.11593.pdf.

@@ -51,10 +51,11 @@ def get_reward_mean(model: nn.Module) -> Tuple[np.ndarray, float]:
 
 def get_params_mean(model: nn.Module) -> Tuple[np.ndarray, float, float, float]:
     representation_mean = model.representation_network.get_param_mean()
+    reconstruction_mean = model.decoder.get_param_mean() # daev -- implement?
     dynamic_mean = model.dynamics_network.get_dynamic_mean()
     reward_w_dist, reward_mean = model.dynamics_network.get_reward_mean()
 
-    return reward_w_dist, representation_mean, dynamic_mean, reward_mean
+    return reward_w_dist, representation_mean, dynamic_mean, reward_mean, reconstruction_mean
 
 
 def get_gradients(model: nn.Module) -> List[torch.Tensor]:

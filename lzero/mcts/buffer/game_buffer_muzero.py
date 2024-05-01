@@ -390,7 +390,7 @@ class MuZeroGameBuffer(GameBuffer):
                         [
                             m_output.latent_state,
                             inverse_scalar_transform(m_output.value, self._cfg.model.support_scale),
-                            m_output.policy_logits
+                            m_output.policy_logits,
                         ]
                     )
 
@@ -400,7 +400,7 @@ class MuZeroGameBuffer(GameBuffer):
             if self._cfg.use_root_value:
                 # use the root values from MCTS, as in EfficientZero
                 # the root values have limited improvement but require much more GPU actors;
-                _, reward_pool, policy_logits_pool, latent_state_roots = concat_output(
+                _, reward_pool, policy_logits_pool, latent_state_roots, _ = concat_output(
                     network_output, data_type='muzero'
                 )
                 reward_pool = reward_pool.squeeze().tolist()
@@ -536,17 +536,18 @@ class MuZeroGameBuffer(GameBuffer):
                 m_output = model.initial_inference(m_obs)
                 if not model.training:
                     # if not in training, obtain the scalars of the value/reward
-                    [m_output.latent_state, m_output.value, m_output.policy_logits] = to_detach_cpu_numpy(
+                    [m_output.latent_state, m_output.value, m_output.policy_logits, m_output.reconstruction] = to_detach_cpu_numpy(
                         [
                             m_output.latent_state,
                             inverse_scalar_transform(m_output.value, self._cfg.model.support_scale),
-                            m_output.policy_logits
+                            m_output.policy_logits, 
+                            m_output.reconstruction
                         ]
                     )
 
                 network_output.append(m_output)
 
-            _, reward_pool, policy_logits_pool, latent_state_roots = concat_output(network_output, data_type='muzero')
+            _, reward_pool, policy_logits_pool, latent_state_roots, _ = concat_output(network_output, data_type='muzero')
             reward_pool = reward_pool.squeeze().tolist()
             policy_logits_pool = policy_logits_pool.tolist()
             # noises are not necessary for reanalyze

@@ -498,7 +498,7 @@ def concat_output(output_lst: List, data_type: str = 'muzero') -> Tuple:
     """
     assert data_type in ['muzero', 'efficientzero'], "data_type should be 'muzero' or 'efficientzero'"
     # concat the model output
-    value_lst, reward_lst, policy_logits_lst, latent_state_lst = [], [], [], []
+    value_lst, reward_lst, policy_logits_lst, latent_state_lst, reconstruction_lst = [], [], [], [], []
     reward_hidden_state_c_lst, reward_hidden_state_h_lst = [], []
     for output in output_lst:
         value_lst.append(output.value)
@@ -509,6 +509,7 @@ def concat_output(output_lst: List, data_type: str = 'muzero') -> Tuple:
 
         policy_logits_lst.append(output.policy_logits)
         latent_state_lst.append(output.latent_state)
+        reconstruction_lst.append(output.reconstruction)
         if data_type == 'efficientzero':
             reward_hidden_state_c_lst.append(output.reward_hidden_state[0].squeeze(0))
             reward_hidden_state_h_lst.append(output.reward_hidden_state[1].squeeze(0))
@@ -517,8 +518,9 @@ def concat_output(output_lst: List, data_type: str = 'muzero') -> Tuple:
     reward_lst = np.concatenate(reward_lst)
     policy_logits_lst = np.concatenate(policy_logits_lst)
     latent_state_lst = np.concatenate(latent_state_lst)
+    reconstruction_lst = np.concatenate(reconstruction_lst)
     if data_type == 'muzero':
-        return value_lst, reward_lst, policy_logits_lst, latent_state_lst
+        return value_lst, reward_lst, policy_logits_lst, latent_state_lst, reconstruction_lst
     elif data_type == 'efficientzero':
         reward_hidden_state_c_lst = np.expand_dims(np.concatenate(reward_hidden_state_c_lst), axis=0)
         reward_hidden_state_h_lst = np.expand_dims(np.concatenate(reward_hidden_state_h_lst), axis=0)
@@ -595,4 +597,5 @@ def mz_network_output_unpack(network_output: Dict) -> Tuple:
     reward = network_output.reward  # shape: (batch_size, support_support_size)
     value = network_output.value  # shape: (batch_size, support_support_size)
     policy_logits = network_output.policy_logits  # shape: (batch_size, action_space_size)
-    return latent_state, reward, value, policy_logits
+    reconstruction = network_output.reconstruction
+    return latent_state, reward, value, policy_logits, reconstruction

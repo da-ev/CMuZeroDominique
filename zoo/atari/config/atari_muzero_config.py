@@ -1,7 +1,7 @@
 from easydict import EasyDict
 
 # options={'PongNoFrameskip-v4', 'QbertNoFrameskip-v4', 'MsPacmanNoFrameskip-v4', 'SpaceInvadersNoFrameskip-v4', 'BreakoutNoFrameskip-v4', ...}
-env_id = 'PongNoFrameskip-v4'
+env_id = 'QbertNoFrameskip-v4'
 
 if env_id == 'PongNoFrameskip-v4':
     action_space_size = 6
@@ -23,7 +23,7 @@ evaluator_env_num = 3
 num_simulations = 50
 update_per_collect = 1000
 batch_size = 256
-max_env_step = int(1e6)
+max_env_step = int(2e5)
 reanalyze_ratio = 0.
 eps_greedy_exploration_in_collect = False
 # ==============================================================
@@ -31,7 +31,7 @@ eps_greedy_exploration_in_collect = False
 # ==============================================================
 
 atari_muzero_config = dict(
-    exp_name=f'data_mz_ctree/{env_id[:-14]}_muzero_ns{num_simulations}_upc{update_per_collect}_rr{reanalyze_ratio}_seed0',
+    exp_name=f'daev_data_mz_ctree/{env_id[:-14]}_muzero_ns{num_simulations}_upc{update_per_collect}_rr{reanalyze_ratio}_seed0',
     env=dict(
         stop_value=int(1e6),
         env_id=env_id,
@@ -93,7 +93,7 @@ atari_muzero_create_config = dict(
     policy=dict(
         type='muzero',
         import_names=['lzero.policy.muzero'],
-    ),
+    )
 )
 atari_muzero_create_config = EasyDict(atari_muzero_create_config)
 create_config = atari_muzero_create_config

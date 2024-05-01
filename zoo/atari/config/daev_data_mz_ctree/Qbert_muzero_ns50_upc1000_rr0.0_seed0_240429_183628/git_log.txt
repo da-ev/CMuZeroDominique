@@ -1,0 +1,212 @@
+v0.0.5-8-gde1da04
+
+commit de1da0462dacde07e3e9e057bdc06b45516fe52e
+Author: Adam Johnson <ajtaken123@gmail.com>
+Date:   Sun Apr 28 00:39:58 2024 -0400
+
+    still debugging
+
+ lzero/model/common.py                              |   1 -
+ lzero/model/muzero_model_daev.py                   |   2 +-
+ lzero/model/utils.py                               |   3 +-
+ lzero/policy/muzero_daev.py                        |  16 +-
+ lzero/policy/utils.py                              |  17 +-
+ .../git_diff.txt                                   | 331 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 335 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 336 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 336 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 327 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 336 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 338 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 337 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 337 ----------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 431 ---------------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 431 ---------------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 431 ---------------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 431 ---------------------
+ .../git_log.txt                                    |  48 ---
+ .../git_diff.txt                                   | 140 +++++++
+ .../git_log.txt                                    | 180 +++++++++
+ 33 files changed, 331 insertions(+), 5389 deletions(-)
+
+commit 3669ad0d705c367ad56f91506166c01af95e55d8
+Author: Adam Johnson <ajtaken123@gmail.com>
+Date:   Sat Apr 27 23:57:19 2024 -0400
+
+    debugging
+
+ dominique-venv/share/doc/networkx-3.1/LICENSE.txt  |    37 +
+ .../networkx-3.1/examples/3d_drawing/README.txt    |     2 +
+ .../examples/3d_drawing/mayavi2_spring.py          |    43 +
+ .../networkx-3.1/examples/3d_drawing/plot_basic.py |    51 +
+ .../share/doc/networkx-3.1/examples/README.txt     |     8 +
+ .../networkx-3.1/examples/algorithms/README.txt    |     2 +
+ .../examples/algorithms/WormNet.v3.benchmark.txt   | 78736 +++++++++++++++++++
+ .../examples/algorithms/hartford_drug.edgelist     |   338 +
+ .../examples/algorithms/plot_beam_search.py        |   112 +
+ .../algorithms/plot_betweenness_centrality.py      |    83 +
+ .../examples/algorithms/plot_blockmodel.py         |    79 +
+ .../examples/algorithms/plot_circuits.py           |   103 +
+ .../examples/algorithms/plot_davis_club.py         |    43 +
+ .../examples/algorithms/plot_dedensification.py    |    92 +
+ .../examples/algorithms/plot_girvan_newman.py      |    79 +
+ .../algorithms/plot_iterated_dynamical_systems.py  |   210 +
+ .../algorithms/plot_krackhardt_centrality.py       |    31 +
+ .../algorithms/plot_maximum_independent_set.py     |    44 +
+ .../algorithms/plot_parallel_betweenness.py        |    82 +
+ .../networkx-3.1/examples/algorithms/plot_rcm.py   |    40 +
+ .../networkx-3.1/examples/algorithms/plot_snap.py  |   108 +
+ .../examples/algorithms/plot_subgraphs.py          |   170 +
+ .../doc/networkx-3.1/examples/basic/README.txt     |     2 +
+ .../networkx-3.1/examples/basic/plot_properties.py |    49 +
+ .../networkx-3.1/examples/basic/plot_read_write.py |    24 +
+ .../examples/basic/plot_simple_graph.py            |    60 +
+ .../doc/networkx-3.1/examples/drawing/README.txt   |     2 +
+ .../examples/drawing/chess_masters_WCC.pgn.bz2     |   Bin 0 -> 100224 bytes
+ .../examples/drawing/knuth_miles.txt.gz            |   Bin 0 -> 20317 bytes
+ .../examples/drawing/plot_center_node.py           |    20 +
+ .../examples/drawing/plot_chess_masters.py         |   152 +
+ .../examples/drawing/plot_custom_node_icons.py     |    75 +
+ .../networkx-3.1/examples/drawing/plot_degree.py   |    50 +
+ .../networkx-3.1/examples/drawing/plot_directed.py |    46 +
+ .../examples/drawing/plot_edge_colormap.py         |    23 +
+ .../examples/drawing/plot_ego_graph.py             |    35 +
+ .../examples/drawing/plot_eigenvalues.py           |    22 +
+ .../examples/drawing/plot_four_grids.py            |    52 +
+ .../examples/drawing/plot_house_with_colors.py     |    26 +
+ .../examples/drawing/plot_knuth_miles.py           |   142 +
+ .../examples/drawing/plot_labels_and_colors.py     |    54 +
+ .../examples/drawing/plot_multipartite_graph.py    |    41 +
+ .../examples/drawing/plot_node_colormap.py         |    15 +
+ .../examples/drawing/plot_rainbow_coloring.py      |    68 +
+ .../drawing/plot_random_geometric_graph.py         |    44 +
+ .../networkx-3.1/examples/drawing/plot_sampson.py  |    47 +
+ .../examples/drawing/plot_selfloops.py             |    29 +
+ .../examples/drawing/plot_simple_path.py           |    14 +
+ .../examples/drawing/plot_spectral_grid.py         |    58 +
+ .../doc/networkx-3.1/examples/drawing/plot_tsp.py  |    52 +
+ .../examples/drawing/plot_unix_email.py            |    62 +
+ .../examples/drawing/plot_weighted_graph.py        |    44 +
+ .../networkx-3.1/examples/drawing/unix_email.mbox  |    84 +
+ .../doc/networkx-3.1/examples/graph/README.txt     |     2 +
+ .../networkx-3.1/examples/graph/plot_dag_layout.py |    42 +
+ .../examples/graph/plot_degree_sequence.py         |    36 +
+ .../examples/graph/plot_erdos_renyi.py             |    36 +
+ .../graph/plot_expected_degree_sequence.py         |    20 +
+ .../networkx-3.1/examples/graph/plot_football.py   |    44 +
+ .../examples/graph/plot_karate_club.py             |    25 +
+ .../networkx-3.1/examples/graph/plot_morse_trie.py |    97 +
+ .../doc/networkx-3.1/examples/graph/plot_mst.py    |    50 +
+ .../graph/plot_napoleon_russian_campaign.py        |   133 +
+ .../doc/networkx-3.1/examples/graph/plot_roget.py  |    80 +
+ .../examples/graph/plot_triad_types.py             |    63 +
+ .../doc/networkx-3.1/examples/graph/plot_words.py  |    88 +
+ .../networkx-3.1/examples/graph/roget_dat.txt.gz   |   Bin 0 -> 15758 bytes
+ .../networkx-3.1/examples/graph/words_dat.txt.gz   |   Bin 0 -> 33695 bytes
+ .../doc/networkx-3.1/examples/subclass/README.txt  |     2 +
+ .../examples/subclass/plot_antigraph.py            |   192 +
+ .../examples/subclass/plot_printgraph.py           |    88 +
+ dominique-venv/share/man/man1/isympy.1             |   188 +
+ dominique-venv/share/man/man1/ttx.1                |   225 +
+ .../CacheControl-0.12.6-py2.py3-none-any.whl       |   Bin 0 -> 28023 bytes
+ .../appdirs-1.4.3-py2.py3-none-any.whl             |   Bin 0 -> 18776 bytes
+ .../certifi-2019.11.28-py2.py3-none-any.whl        |   Bin 0 -> 164552 bytes
+ .../chardet-3.0.4-py2.py3-none-any.whl             |   Bin 0 -> 141487 bytes
+ .../colorama-0.4.3-py2.py3-none-any.whl            |   Bin 0 -> 25094 bytes
+ .../contextlib2-0.6.0-py2.py3-none-any.whl         |   Bin 0 -> 17188 bytes
+ .../distlib-0.3.0-py2.py3-none-any.whl             |   Bin 0 -> 152027 bytes
+ .../distro-1.4.0-py2.py3-none-any.whl              |   Bin 0 -> 23898 bytes
+ .../html5lib-1.0.1-py2.py3-none-any.whl            |   Bin 0 -> 120020 bytes
+ .../python-wheels/idna-2.8-py2.py3-none-any.whl    |   Bin 0 -> 66836 bytes
+ .../ipaddr-2.2.0-py2.py3-none-any.whl              |   Bin 0 -> 24287 bytes
+ .../lockfile-0.12.2-py2.py3-none-any.whl           |   Bin 0 -> 21972 bytes
+ .../msgpack-0.6.2-py2.py3-none-any.whl             |   Bin 0 -> 92927 bytes
+ .../packaging-20.3-py2.py3-none-any.whl            |   Bin 0 -> 42242 bytes
+ .../pep517-0.8.2-py2.py3-none-any.whl              |   Bin 0 -> 26686 bytes
+ .../python-wheels/pip-20.0.2-py2.py3-none-any.whl  |   Bin 0 -> 262440 bytes
+ .../pkg_resources-0.0.0-py2.py3-none-any.whl       |   Bin 0 -> 127312 bytes
+ .../progress-1.5-py2.py3-none-any.whl              |   Bin 0 -> 17547 bytes
+ .../pyparsing-2.4.6-py2.py3-none-any.whl           |   Bin 0 -> 77093 bytes
+ .../requests-2.22.0-py2.py3-none-any.whl           |   Bin 0 -> 67543 bytes
+ .../retrying-1.3.3-py2.py3-none-any.whl            |   Bin 0 -> 16358 bytes
+ .../setuptools-44.0.0-py2.py3-none-any.whl         |   Bin 0 -> 477455 bytes
+ .../python-wheels/six-1.14.0-py2.py3-none-any.whl  |   Bin 0 -> 20256 bytes
+ .../python-wheels/toml-0.10.0-py2.py3-none-any.whl |   Bin 0 -> 24106 bytes
+ .../urllib3-1.25.8-py2.py3-none-any.whl            |   Bin 0 -> 127437 bytes
+ .../webencodings-0.5.1-py2.py3-none-any.whl        |   Bin 0 -> 20484 bytes
+ .../wheel-0.34.2-py2.py3-none-any.whl              |   Bin 0 -> 35613 bytes
+ lzero/entry/train_muzero.py                        |     9 +-
+ lzero/mcts/buffer/game_buffer_muzero.py            |    11 +-
+ lzero/mcts/tests/test_muzero_game_buffer.py        |     2 +-
+ lzero/model/common.py                              |   201 +-
+ lzero/model/muzero_model_daev.py                   |   565 +
+ lzero/policy/gumbel_muzero.py                      |     2 +-
+ lzero/policy/muzero_daev.py                        |   801 +
+ lzero/policy/utils.py                              |    20 +-
+ .../cartpole/config/cartpole_muzero_config.py      |     2 +-
+ 109 files changed, 84896 insertions(+), 13 deletions(-)
+
+commit d37249803c1f9170125c6ef75c15af0ae7f5509f
+Author: Adam Johnson <ajtaken123@gmail.com>
+Date:   Sat Apr 27 23:56:54 2024 -0400
+
+    debugging
+
+ .../config/atari_muzero_multigpu_ddp_config.py     |   6 +-
+ .../git_diff.txt                                   | 331 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 335 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 336 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 336 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 327 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 336 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 338 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 337 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 337 ++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 431 +++++++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 431 +++++++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 431 +++++++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ .../git_diff.txt                                   | 431 +++++++++++++++++++++
+ .../git_log.txt                                    |  48 +++
+ 27 files changed, 5364 insertions(+), 3 deletions(-)
+
+commit 4640ee3adfad85e346f3409b628d2780cf3716d7
+Author: 蒲源 <2402552459@qq.com>
+Date:   Tue Apr 16 17:53:03 2024 +0800
+
+    polish(pu): polish release.yml
+
+ .github/workflows/release.yml | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit 91ace9be294a4a8d62ab26a5e24f7d49ef36a665
+Author: 蒲源 <2402552459@qq.com>
+Date:   Tue Apr 16 12:11:52 2024 +0800
+
+    polish(pu): polish release.yml
+
+ .github/workflows/release.yml | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)

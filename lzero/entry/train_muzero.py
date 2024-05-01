@@ -81,9 +81,11 @@ def train_muzero(
         cfg.policy.learn.learner.hook.save_ckpt_after_iter = cfg.policy.eval_freq
 
     policy = create_policy(cfg.policy, model=model, enable_field=['learn', 'collect', 'eval'])
-
+    
+    
     # load pretrained model
     if model_path is not None:
+        print("here")
         policy.learn_mode.load_state_dict(torch.load(model_path, map_location=cfg.policy.device))
 
     # Create worker components: learner, collector, evaluator, replay buffer, commander.

@@ -68,7 +68,7 @@ cartpole_muzero_create_config = dict(
     env_manager=dict(type='subprocess'),
     policy=dict(
         type='muzero',
-        import_names=['lzero.policy.muzero'],
+        import_names=['lzero.policy.muzero_daev'],
     ),
 )
 cartpole_muzero_create_config = EasyDict(cartpole_muzero_create_config)

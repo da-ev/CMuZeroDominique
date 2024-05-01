@@ -1,0 +1,81 @@
+diff --git a/lzero/entry/train_muzero.py b/lzero/entry/train_muzero.py
+index d090bfe..55ff5cb 100644
+--- a/lzero/entry/train_muzero.py
++++ b/lzero/entry/train_muzero.py
+@@ -195,14 +195,7 @@ def train_muzero(
+                 break
+ 
+             # The core train steps for MCTS+RL algorithms.
+-            try:
+-                print("train_muzero.py -- 198")
+-                log_vars = learner.train(train_data, collector.envstep)
+-                print("log_vars: ", log_vars)
+-                print("train_muzero.py -- 200")
+-            except Exception as e:
+-                print(f"An error occurred: {e}")
+-                raise
++            log_vars = learner.train(train_data, collector.envstep)
+ 
+             if cfg.policy.use_priority:
+                 replay_buffer.update_priority(train_data, log_vars[0]['value_priority_orig'])
+diff --git a/lzero/model/common.py b/lzero/model/common.py
+index ed55609..d281d0d 100644
+--- a/lzero/model/common.py
++++ b/lzero/model/common.py
+@@ -509,6 +509,9 @@ class SimpleDecoder(nn.Module):
+         self.up4 = nn.ConvTranspose2d(32, 32, kernel_size=3, stride=2, padding=1, output_padding=1)
+         self.norm_out = ImportedNormalize(32)
+         self.conv_out = nn.Conv2d(32, out_channels, kernel_size=3, stride=1, padding=1)
++        
++        for params in self.parameters():
++            params.requires_grad_(True)
+ 
+     def forward(self, x):
+         x = self.up1(x)
+diff --git a/lzero/policy/muzero_daev.py b/lzero/policy/muzero_daev.py
+index 6059fcb..09cfdce 100644
+--- a/lzero/policy/muzero_daev.py
++++ b/lzero/policy/muzero_daev.py
+@@ -372,7 +372,7 @@ class MuZeroPolicy(Policy):
+         policy_loss = cross_entropy_loss(policy_logits, target_policy[:, 0])
+         value_loss = cross_entropy_loss(value, target_value_categorical[:, 0])
+         
+-        recon_loss = torch.abs(obs_batch - reconstruction).mean() # daev
++        recon_loss = torch.abs(obs_batch - reconstruction).mean(dim=(1,2,3)) # daev
+ 
+         prob = torch.softmax(policy_logits, dim=-1)
+         entropy = -(prob * prob.log()).sum(-1)
+@@ -410,9 +410,10 @@ class MuZeroPolicy(Policy):
+ 
+                     # NOTE: no grad for the representation_state branch
+                     dynamic_proj = self._learn_model.project(latent_state, with_grad=True)
+-                    observation_proj = self._learn_model.project(representation_state, with_grad=False) # daev -- should this be changed to True because now we measure loss?
++                    observation_proj = self._learn_model.project(representation_state, with_grad=False)
+                     temp_loss = negative_cosine_similarity(dynamic_proj, observation_proj) * mask_batch[:, step_k]
+                     consistency_loss += temp_loss
++                    recon_loss += torch.abs(obs_target_batch[:, beg_index:end_index] - reconstruction).mean(dim=(1,2,3)) # daev
+ 
+             # NOTE: the target policy, target_value_categorical, target_reward_categorical is calculated in
+             # game buffer now.
+@@ -490,7 +491,7 @@ class MuZeroPolicy(Policy):
+             'reward_loss': reward_loss.mean().item(),
+             'value_loss': value_loss.mean().item(),
+             'consistency_loss': consistency_loss.mean().item() / self._cfg.num_unroll_steps,
+-            'reconstruction_loss': recon_loss.mean().item,
++            'reconstruction_loss': recon_loss.mean().item(),
+             'target_reward': target_reward.mean().item(),
+             'target_value': target_value.mean().item(),
+             'transformed_target_reward': transformed_target_reward.mean().item(),
+diff --git a/zoo/atari/config/atari_muzero_multigpu_ddp_config.py b/zoo/atari/config/atari_muzero_multigpu_ddp_config.py
+index 536eded..22a0afc 100644
+--- a/zoo/atari/config/atari_muzero_multigpu_ddp_config.py
++++ b/zoo/atari/config/atari_muzero_multigpu_ddp_config.py
+@@ -24,7 +24,7 @@ evaluator_env_num = 3
+ num_simulations = 50
+ update_per_collect = 1000
+ batch_size = 256
+-max_env_step = int(1e6)
++max_env_step = int(2e5)
+ reanalyze_ratio = 0.
+ eps_greedy_exploration_in_collect = False
+ # ==============================================================
